@@ -1,0 +1,33 @@
+Task: ESP OTA update
+General description.
+Device has two microcontrollers: ESP32 and STM32. ESP32 is a main controller. Device checks available version on the server and start updating process if need.
+Firmware for ESP is downloading into the OTA0/1 partition. Firmware for STM32 is downloading into the flash storage. After successful downloading of STM32 firmware, ESP32 start updating STM32 (actual updating of STM32 is not part of this task).
+
+Downloading of firmwares is done by HTTP GET request.
+Url for downloading:
+http://<SERVER_NAME>:7777/firmware_esp32.bin
+http://<SERVER_NAME>:7777/firmware_stm32.bin
+
+GET response has custom header “Signature” with SHA256 HMAC signature of the firmware file.
+
+Basic process flow:
+Make GET request to download firmware_stm32.bin
+Check file signature
+Update STM32
+Make GET request to download firmware_esp32.bin
+Check file signature
+Complete updating process
+In case of any error brake updating process
+
+
+Optional requirement.
+Use https connection with server verification.
+
+
+
+Expect result: 
+Tasks list.
+Estimated time for all tasks.
+Block diagram of the program logic or UML.
+Code should be in git repository.
+ESP32 C project in Eclipse IDE
